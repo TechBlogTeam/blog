@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blog.mapper.article.ArticleMapper">
+    <resultMap id="BaseResultMap" type="com.blog.entity.article.Article">
+        <id column="article_id" jdbcType="INTEGER" property="articleId"/>
+        <result column="article_uid" jdbcType="VARCHAR" property="articleUid"/>
+        <result column="article_title" jdbcType="TINYINT" property="articleTitle"/>
+        <result column="article_keywords" jdbcType="VARCHAR" property="articleKeywords"/>
+        <result column="article_excerpt" jdbcType="VARCHAR" property="articleExcerpt"/>
+        <result column="article_content" jdbcType="VARCHAR" property="articleContent"/>
+        <result column="article_type_id" jdbcType="VARCHAR" property="articleTypeId"/>
+        <result column="article_from" jdbcType="VARCHAR" property="articleFrom"/>
+        <result column="article_click" jdbcType="VARCHAR" property="articleClick"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="article_order" jdbcType="VARCHAR" property="articleOrder"/>
+        <result column="article_thumbnail" jdbcType="VARCHAR" property="articleThumbnail"/>
+        <result column="comment_count" jdbcType="VARCHAR" property="commentCount"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        article_uid, article_title, article_keywords, article_excerpt, article_content, article_type_id,
+        article_from, article_click, create_time, update_time, article_order, article_thumbnail, comment_count
+    </sql>
+
+    <select id="getArticleByPage" parameterType="Map" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/> from article
+        <if test="start!=null and pageSize!=null">
+            limit #{start},#{pageSize}
+        </if>
+    </select>
+
+    <select id="getNewestArticle"  resultType="com.blog.entity.article.Article">
+        select * from article order by article_id DESC limit 1
+    </select>
+
+    <select id="getArticleById" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select * from article where article_uid = "${articleUid}"
+    </select>
+    <update id="updateArticleClick">
+        update article set article_click=article_click+1 where article_uid="${articleUid}"
+    </update>
+    <select id="getArticleTotal" parameterType="Map" resultType="int">
+        select count(*) from article
+        <if test="keyword!=null">
+            where (article_title like CONCAT('%','${keyword}','%' ) or article_excerpt like CONCAT('%','${keyword}','%' ))
+        </if>
+    </select>
+
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="articleId" parameterType="com.blog.entity.article.Article">
+        insert into article
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="articleId != null">
+                article_id,
+            </if>
+            <if test="articleUid != null">
+                article_uid,
+            </if>
+            <if test="articleTitle != null">
+                article_title,
+            </if>
+            <if test="articleKeywords != null">
+                article_keywords,
+            </if>
+            <if test="articleExcerpt != null">
+                article_excerpt,
+            </if>
+            <if test="articleContent != null">
+                article_content,
+            </if>
+            <if test="articleTypeId != null">
+                article_type_id,
+            </if>
+            <if test="articleFrom != null">
+                article_from,
+            </if>
+            <if test="articleClick != null">
+                article_click,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="articleOrder != null">
+                article_order,
+            </if>
+            <if test="articleThumbnail != null">
+                article_thumbnail,
+            </if>
+            <if test="commentCount != null">
+                comment_count,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="articleId != null">
+                #{articleId,jdbcType=BIGNIT},
+            </if>
+            <if test="articleUid != null">
+                #{articleUid,jdbcType=VARCHAR},
+            </if>
+            <if test="articleTitle != null">
+                #{articleTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="articleKeywords != null">
+                #{articleKeywords,jdbcType=VARCHAR},
+            </if>
+            <if test="articleExcerpt != null">
+                #{articleExcerpt,jdbcType=VARCHAR},
+            </if>
+            <if test="articleContent != null">
+                #{articleContent,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="articleTypeId != null">
+                #{articleTypeId,jdbcType=TINYINT},
+            </if>
+            <if test="articleFrom != null">
+                #{articleFrom,jdbcType=VARCHAR},
+            </if>
+            <if test="articleClick != null">
+                #{articleClick,jdbcType=INT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="articleOrder != null">
+                #{articleOrder,jdbcType=INT},
+            </if>
+            <if test="articleThumbnail != null">
+                #{articleThumbnail,jdbcType=VARCHAR},
+            </if>
+            <if test="commentCount != null">
+                #{commentCount,jdbcType=INT},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateSelective" parameterType="com.blog.entity.article.Article">
+        update article
+        <set>
+            <if test="articleTitle != null">
+                article_title = #{articleTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="articleKeywords != null">
+                article_keywords = #{articleKeywords,jdbcType=VARCHAR},
+            </if>
+            <if test="articleExcerpt != null">
+                article_excerpt = #{articleExcerpt,jdbcType=VARCHAR},
+            </if>
+            <if test="articleContent != null">
+                article_content = #{articleContent,jdbcType=VARCHAR},
+            </if>
+            <if test="articleTypeId != null">
+                article_type_id = #{articleTypeId,jdbcType=TINYINT},
+            </if>
+            <if test="articleFrom != null">
+                article_from = #{articleFrom,jdbcType=VARCHAR},
+            </if>
+            <if test="articleClick != null">
+                article_click = #{articleClick,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="articleOrder != null">
+                article_order = #{articleOrder,jdbcType=INT},
+            </if>
+            <if test="articleThumbnail != null">
+                article_thumbnail = #{articleThumbnail,jdbcType=VARCHAR},
+            </if>
+            <if test="commentCount != null">
+                comment_count = #{commentCount,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where article_uid = #{articleUid,jdbcType=VARCHAR}
+    </update>
+
+</mapper>

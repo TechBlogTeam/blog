@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blog.mapper.article.ArticleTypeMapper">
+    <resultMap id="BaseResultMap" type="com.blog.entity.article.ArticleType">
+        <id column="article_type_id" jdbcType="INTEGER" property="articleTypeId"/>
+        <result column="article_type_name" jdbcType="TINYINT" property="articleTypeName"/>
+        <result column="article_type_description" jdbcType="VARCHAR" property="articleTypeDescription"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        article_type_id, article_type_name, article_type_description
+    </sql>
+    <select id="getArticleTypeList" resultMap="BaseResultMap">
+        select article_type_id,article_type_name from article_type
+    </select>
+    <insert id="addArticleType">
+        insert into article_type
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="articleTypeId != null">
+                article_type_id,
+            </if>
+            <if test="articleTypeName != null">
+                article_type_name,
+            </if>
+            <if test="articleTypeDescription != null">
+                article_type_description,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="articleTypeId != null">
+                #{articleTypeId,jdbcType=INTEGER},
+            </if>
+            <if test="articleTypeName != null">
+                #{articleTypeName,jdbcType=VARCHAR},
+            </if>
+            <if test="articleTypeDescription != null">
+                #{articleTypeDescription,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <delete id="deleteArticleTypeById" parameterType="java.lang.Integer">
+        delete from article_type where article_type_id=#{articleTypeId,jdbcType=INTEGER}
+    </delete>
+</mapper>
