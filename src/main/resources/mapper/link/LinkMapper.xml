@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.blog.mapper.LinkMapper">
-    <resultMap id="BaseResultMap" type="com.blog.entity.Link">
+<mapper namespace="com.blog.mapper.link.LinkMapper">
+    <resultMap id="BaseResultMap" type="com.blog.entity.link.Link">
         <id column="link_id" jdbcType="INTEGER" property="linkId"/>
         <result column="username" jdbcType="TINYINT" property="linkUrl"/>
         <result column="link_url" jdbcType="VARCHAR" property="linkUrl"/>
@@ -42,7 +42,7 @@
             #{id}
         </foreach>
     </update>
-    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="linkId" parameterType="com.edu.model.link.entity.Link">
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="linkId" parameterType="com.blog.entity.link.Link">
         insert into link
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="linkId != null">
@@ -105,7 +105,7 @@
     </insert>
 
 
-    <update id="updateSelective" parameterType="com.edu.model.link.entity.Link">
+    <update id="updateSelective" parameterType="com.blog.entity.link.Link">
         update link
         <set>
             <if test="linkType != null">

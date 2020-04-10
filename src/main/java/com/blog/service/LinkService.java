@@ -1,8 +1,8 @@
 package com.blog.service;
 
 import com.blog.common.utils.PagerUtil;
-import com.blog.dto.LinkDto;
-import com.blog.entity.Link;
+import com.blog.dto.link.LinkDto;
+import com.blog.entity.link.Link;
 
 import java.util.List;
 

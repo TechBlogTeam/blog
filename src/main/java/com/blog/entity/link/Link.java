@@ -1,10 +1,10 @@
-package com.blog.dto;
+package com.blog.entity.link;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.util.Date;
 
-public class LinkDto {
+public class Link {
     //主键
     private Integer linkId;
     //连接url

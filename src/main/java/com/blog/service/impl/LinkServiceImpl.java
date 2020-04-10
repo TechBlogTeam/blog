@@ -1,9 +1,9 @@
 package com.blog.service.impl;
 
 import com.blog.common.utils.PagerUtil;
-import com.blog.mapper.LinkMapper;
-import com.blog.dto.LinkDto;
-import com.blog.entity.Link;
+import com.blog.mapper.link.LinkMapper;
+import com.blog.dto.link.LinkDto;
+import com.blog.entity.link.Link;
 import com.blog.service.LinkService;
 import org.springframework.stereotype.Service;
 
